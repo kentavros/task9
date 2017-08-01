@@ -1,0 +1,24 @@
+<?php
+class HtmlHelper
+{
+    public static function table($tr, $td) 
+    {
+        $res .='<table>';
+
+        for($i=1; $i==$tr; $i++)
+        {
+            $res .='<tr>';
+                
+                    for($n=1; $n==$td; $n++)
+                {
+                    $res .='<td>1</td><td>2</td>';
+                    
+                }
+                
+            $res .='</tr>'; 
+        }
+        $res .='</table>';
+        return $res;
+    }
+}
+?>
