@@ -1,34 +1,167 @@
 <?php
 class HtmlHelper
 {
-    public static function table($tr, $th=0, $td) 
+
+    /**
+     * Table method
+     * @param array $arr[][$v,$v,$v]
+     * @param array $th
+     * @param bool $caption
+     * @return string
+     * @throws Exception
+     */
+    public static function table(array $arr, array $th=[], $caption=false)
     {
-        $res .='<table>';
-
-        for($i=1; $i<=$tr; $i++)
+        if(!empty($arr))
         {
-            $res .='<tr>';
-
-                for($d=1; $d<=$td; $d++)
+            $table = '<table class="table container table-bordered text-center">';
+            if ($caption)
+            {
+                $table .= '<caption class="text-center alert-info"><h3>'.(string)$caption.'</h3></caption>';
+            }
+            if ((count($th)) == (count($arr[0])))
+            {
+                $table .= '<tr>';
+                foreach ($th as $v)
                 {
-                  //  if ($th == 0)
-                  //  {
-
-                        $res .='<td>table</td>';
-                   // }
-                  //  else 
-                  //  {
-                   //     $res .='<th></th>';
-                   //     $th=0;
-                   //     $d=1;
-                   //     break;
-                  //  }   
+                    $table .= '<th class="text-center">'.$v.'</th>';
                 }
-                
-            $res .='</tr>'; 
+                $table .= '</tr>';
+            }
+
+            $tr = count($arr);
+            for($i=0; $i<$tr; $i++)
+            {
+                $table .='<tr>';
+
+                    for ($n=0; $n<count($arr[$i]); $n++)
+                    {
+                      $table .='<td>'.$arr[$i][$n].'</td>';
+                    }
+
+                $table .= '</tr>';
         }
-        $res .='</table>';
-        return $res;
+        $table .= '<table>';
+        return $table;
+        }
+        else
+        {
+            throw new Exception(ERR_ARR);
+        }
+    }
+
+
+    /**
+     * To bild select tag
+     * @param array $opt
+     * @param $selected
+     * @param bool $mult
+     * @return string
+     */
+    public static function select(array $opt, $selected, $mult=false)
+    {
+        if ($mult != false)
+        {
+            $sel = '<select multiple size="'.$mult.'">';
+        }
+        else
+        {
+            $sel = '<select>';
+        }
+        $countOpt= count($opt);
+        for ($i=0; $i<$countOpt; $i++)
+        {
+            if ($i == (int)$selected)
+            {
+                $sel .= '<option selected value="'.$i.'">'.$opt[$i].'</option>';
+            }
+            else
+            {
+                $sel .= '<option value="'.$i.'">'.$opt[$i].'</option>';
+            }
+        }
+        $sel .= '</select>';
+        return $sel;
+    }
+
+
+    /**
+     * To bild list ol or ul
+     * @param array $li
+     * @param bool $ol
+     * @return string
+     */
+    public static function ulol(array $li, $ol=false)
+    {
+        $countLi = count($li);
+        if ($ol)
+        {
+            $list = '<ol>';
+            for ($i=0; $i<$countLi; $i++)
+            {
+                $list .= '<li>'.$li[$i].'</li>';
+            }
+            $list .= '</ol>';
+        }
+        else
+        {
+            $list = '<ul>';
+                for ($i=0; $i<$countLi; $i++)
+                {
+                    $list .= '<li>'.$li[$i].'</li>';
+                }
+            $list .= '</ul>';
+        }
+        return $list;
+    }
+
+    /**
+     * dl list bild
+     * @param array $dl
+     * @return string
+     */
+    public static function dldtdd(array $dl)
+    {
+        $list = '<dl>';
+            foreach ($dl as $k=>$v)
+            {
+                $list .= '<dt style="margin-top: 5px;">'.$k.'</dt><dd style="font-style: italic; margin-left: 20px">'.$v.'</dd>';
+            }
+        $list .= '</dl>';
+            return $list;
+    }
+
+    /**
+     * bild radio and checkbox input
+     * @param array $val
+     * @param $name
+     * @param bool $check
+     * @return string
+     */
+    public static function inputRadioCheckbox(array $val, $name, $check=false)
+    {
+        if ($check)
+        {
+            $input = '';
+            foreach ($val as $k=>$v)
+            {
+                $input .= '<input type="checkbox" ';
+                $input .='name="'.(string) $name.'" value="'.$k.'" />'.$v.'<br>';
+            }
+            $input .= '<input type="submit" value="Send">';
+            return $input;
+        }
+        else
+        {
+            $input = '';
+            foreach ($val as $k=>$v)
+            {
+                $input .= '<input type="radio" ';
+                $input .='name="'.(string) $name.'" value="'.$k.'" />'.$v.'<br>';
+            }
+            $input .= '<input type="submit" value="Send">';
+            return $input;
+        }
     }
 }
 ?>
