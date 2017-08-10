@@ -10,21 +10,21 @@ class HtmlHelper
      * @return string
      * @throws Exception
      */
-    public static function table(array $arr, array $th=[], $caption=false)
+    public static function table(array $arr, array $th=[], $caption=false, $classTable=false, $classCaption=false, $classTh=false)
     {
         if(!empty($arr))
         {
-            $table = '<table class="table container table-bordered text-center">';
+            $table = '<table class="'.$classTable.'">';
             if ($caption)
             {
-                $table .= '<caption class="text-center alert-info"><h3>'.(string)$caption.'</h3></caption>';
+                $table .= '<caption class="'.$classCaption.'"><h3>'.(string)$caption.'</h3></caption>';
             }
             if ((count($th)) == (count($arr[0])))
             {
                 $table .= '<tr>';
                 foreach ($th as $v)
                 {
-                    $table .= '<th class="text-center">'.$v.'</th>';
+                    $table .= '<th class="'.$classTh.'">'.$v.'</th>';
                 }
                 $table .= '</tr>';
             }
@@ -120,12 +120,12 @@ class HtmlHelper
      * @param array $dl
      * @return string
      */
-    public static function dldtdd(array $dl)
+    public static function dldtdd(array $dl, $styleDt=false, $styleDd=false)
     {
         $list = '<dl>';
             foreach ($dl as $k=>$v)
             {
-                $list .= '<dt style="margin-top: 5px;">'.$k.'</dt><dd style="font-style: italic; margin-left: 20px">'.$v.'</dd>';
+                $list .= '<dt style="'.$styleDt.'">'.$k.'</dt><dd style="'.$styleDd.'">'.$v.'</dd>';
             }
         $list .= '</dl>';
             return $list;
@@ -138,7 +138,7 @@ class HtmlHelper
      * @param bool $check
      * @return string
      */
-    public static function inputRadioCheckbox(array $val, $name, $check=false)
+    public static function inputRadioCheckbox(array $val, $name, $check=false, $valueS=false)
     {
         if ($check)
         {
@@ -148,7 +148,7 @@ class HtmlHelper
                 $input .= '<input type="checkbox" ';
                 $input .='name="'.(string) $name.'" value="'.$k.'" />'.$v.'<br>';
             }
-            $input .= '<input type="submit" value="Send">';
+            $input .= '<input type="submit" value="'.$valueS.'">';
             return $input;
         }
         else
@@ -159,7 +159,7 @@ class HtmlHelper
                 $input .= '<input type="radio" ';
                 $input .='name="'.(string) $name.'" value="'.$k.'" />'.$v.'<br>';
             }
-            $input .= '<input type="submit" value="Send">';
+            $input .= '<input type="submit" value="'.$valueS.'">';
             return $input;
         }
     }
